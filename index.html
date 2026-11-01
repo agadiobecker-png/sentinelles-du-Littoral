@@ -1,0 +1,2776 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioLit x Éco2Nature — Les Sentinelles du Littoral</title>
+    <style>
+        /* ========================================================
+           CONTRAINTE ABSOLUE : AUCUN TEXTE EN GRAS DANS TOUTE L'APPLICATION
+           ======================================================== */
+        *, *::before, *::after, html, body, h1, h2, h3, h4, h5, h6, 
+        p, span, div, strong, b, em, i, u, button, input, select, 
+        textarea, label, a, li, ul, table, tr, td, th {
+            font-weight: 400 !important;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --bg-abyss: #05070f;
+            --bg-deep: #0a0e1c;
+            --bg-card: #101728;
+            --bg-card-hover: #162036;
+            --bg-elevated: #1a253e;
+            
+            --cyan-neon: #00e5ff;
+            --cyan-glow: rgba(0, 229, 255, 0.35);
+            --emerald-neon: #00e676;
+            --emerald-glow: rgba(0, 230, 118, 0.35);
+            --electric-blue: #2979ff;
+            --blue-glow: rgba(41, 121, 255, 0.35);
+            --coral-alert: #ff5252;
+            --coral-glow: rgba(255, 82, 82, 0.35);
+            --amber-star: #ffb74d;
+            
+            --text-main: #f0f4f8;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --border-subtle: rgba(0, 229, 255, 0.18);
+            --border-hover: rgba(0, 229, 255, 0.55);
+            --border-emerald: rgba(0, 230, 118, 0.5);
+
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --transition-smooth: all 0.25s ease-out;
+        }
+
+        body {
+            background-color: var(--bg-abyss);
+            background-image: 
+                radial-gradient(circle at 50% 0%, #0d1a33 0%, transparent 65%),
+                radial-gradient(circle at 15% 30%, rgba(0, 229, 255, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(0, 230, 118, 0.03) 0%, transparent 45%);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        /* Liens et boutons */
+        a {
+            color: var(--cyan-neon);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        a:hover {
+            color: var(--emerald-neon);
+            text-shadow: 0 0 8px var(--emerald-glow);
+        }
+
+        strong, b {
+            color: var(--cyan-neon);
+            font-weight: 400 !important;
+        }
+
+        em, i {
+            font-style: italic;
+            color: #d8e5f3;
+            font-weight: 400 !important;
+        }
+
+        /* Conteneur principal */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px;
+        }
+
+        /* ========================================================
+           EN-TÊTE ET LOGOS PARTENAIRES
+           ======================================================== */
+        .header-section {
+            border: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, rgba(16, 23, 40, 0.85) 0%, rgba(10, 14, 28, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan-neon), var(--emerald-neon), transparent);
+        }
+
+        .partners-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            margin-bottom: 24px;
+        }
+
+        .partner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(16, 23, 40, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-full);
+            padding: 6px 14px;
+            transition: var(--transition-smooth);
+        }
+        .partner-badge:hover {
+            border-color: var(--cyan-neon);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .partner-badge svg {
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .partner-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .partner-name {
+            font-size: 0.92rem;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .main-title-block {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--cyan-neon);
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: var(--radius-full);
+            padding: 4px 14px;
+            margin-bottom: 12px;
+        }
+
+        h1.app-title {
+            font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+            color: #ffffff;
+            letter-spacing: 0.03em;
+            margin-bottom: 8px;
+            text-shadow: 0 0 25px rgba(0, 229, 255, 0.3);
+        }
+
+        p.app-subtitle {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            color: var(--text-secondary);
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        /* Illustration vectorielle estran nocturne */
+        .hero-illustration-wrapper {
+            width: 100%;
+            height: 160px;
+            margin-top: 18px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            background: #040711;
+            position: relative;
+        }
+
+        .hero-illustration-wrapper svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* ========================================================
+           BARRE DE PROGRESSION GLOBALE ET STATS
+           ======================================================== */
+        .global-status-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 18px 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .progress-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-percentage {
+            font-size: 1.1rem;
+            color: var(--cyan-neon);
+            text-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: #090e1b;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--electric-blue), var(--cyan-neon), var(--emerald-neon));
+            border-radius: var(--radius-full);
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .module-stepper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .step-pill {
+            background: #090e1b;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: left;
+        }
+
+        .step-pill:hover {
+            border-color: var(--cyan-neon);
+            background: rgba(0, 229, 255, 0.05);
+        }
+
+        .step-pill.active {
+            border-color: var(--cyan-neon);
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .step-pill.completed {
+            border-color: var(--emerald-neon);
+            background: rgba(0, 230, 118, 0.08);
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .step-pill.active .step-number {
+            background: var(--cyan-neon);
+            color: #05070f;
+            box-shadow: 0 0 8px var(--cyan-glow);
+        }
+
+        .step-pill.completed .step-number {
+            background: var(--emerald-neon);
+            color: #05070f;
+            box-shadow: 0 0 8px var(--emerald-glow);
+        }
+
+        .step-title {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            display: block;
+            line-height: 1.25;
+        }
+
+        .step-status {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: block;
+        }
+        .step-pill.active .step-status {
+            color: var(--cyan-neon);
+        }
+        .step-pill.completed .step-status {
+            color: var(--emerald-neon);
+        }
+
+        /* ========================================================
+           CONTENEURS DES MODULES DE JEU
+           ======================================================== */
+        .module-container {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .module-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .card-panel-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .module-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--emerald-neon);
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid var(--border-emerald);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            margin-bottom: 8px;
+        }
+
+        h2.module-heading {
+            font-size: 1.5rem;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+        }
+
+        p.module-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            max-width: 800px;
+        }
+
+        /* ========================================================
+           MODULE 1 : QUIZ PROTOCOLE & RIGUEUR SCIENTIFIQUE
+           ======================================================== */
+        .scenario-box {
+            background: rgba(14, 22, 40, 0.7);
+            border-left: 3px solid var(--cyan-neon);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .scenario-icon {
+            color: var(--cyan-neon);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .scenario-text {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .quiz-card {
+            background: var(--bg-deep);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .quiz-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .question-tag {
+            color: var(--cyan-neon);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            background: rgba(0, 229, 255, 0.08);
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        h3.quiz-question-title {
+            font-size: 1.18rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            line-height: 1.45;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option-button {
+            background: #111a2f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition-smooth);
+            width: 100%;
+            color: var(--text-main);
+        }
+
+        .option-button:hover:not(:disabled) {
+            border-color: var(--cyan-neon);
+            background: #162442;
+            transform: translateX(4px);
+            box-shadow: 0 0 14px rgba(0, 229, 255, 0.15);
+        }
+
+        .option-button.selected {
+            border-color: var(--cyan-neon);
+            background: rgba(0, 229, 255, 0.12);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .option-letter {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--cyan-neon);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .option-button.selected .option-letter {
+            background: var(--cyan-neon);
+            color: #05070f;
+        }
+
+        .option-button.correct {
+            border-color: var(--emerald-neon) !important;
+            background: rgba(0, 230, 118, 0.12) !important;
+            box-shadow: 0 0 15px var(--emerald-glow) !important;
+        }
+
+        .option-button.correct .option-letter {
+            background: var(--emerald-neon) !important;
+            color: #05070f !important;
+            border-color: var(--emerald-neon) !important;
+        }
+
+        .option-button.incorrect {
+            border-color: var(--coral-alert) !important;
+            background: rgba(255, 82, 82, 0.12) !important;
+            box-shadow: 0 0 15px var(--coral-glow) !important;
+        }
+
+        .option-button.incorrect .option-letter {
+            background: var(--coral-alert) !important;
+            color: #ffffff !important;
+            border-color: var(--coral-alert) !important;
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .quiz-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 0.92rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            text-align: center;
+            background: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00b0ff 0%, #00e5ff 100%);
+            color: #05070f;
+            box-shadow: 0 0 16px var(--cyan-glow);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(0, 229, 255, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+            color: #05070f;
+            box-shadow: 0 0 16px var(--emerald-glow);
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(0, 230, 118, 0.6);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .btn-outline:hover {
+            border-color: var(--cyan-neon);
+            color: var(--cyan-neon);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        /* Encadré d'explication pédagogique Éco2Nature */
+        .pedagogic-feedback {
+            margin-top: 20px;
+            background: #0b1424;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .pedagogic-feedback.visible {
+            display: block;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+            color: var(--emerald-neon);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .feedback-content {
+            font-size: 0.92rem;
+            color: var(--text-main);
+            line-height: 1.55;
+            border-left: 2px solid var(--emerald-neon);
+            padding-left: 14px;
+        }
+
+        .feedback-tip {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--amber-star);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ========================================================
+           MODULE 2 : CARTE CLIMAT & SÉRIE TEMPORELLE
+           ======================================================== */
+        .map-layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .map-layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .map-viewport-card {
+            background: #040813;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            position: relative;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+
+        .map-species-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .toggle-btn {
+            background: #0a1122;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border-radius: var(--radius-full);
+            padding: 8px 16px;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--cyan-neon);
+            color: var(--text-main);
+        }
+
+        .toggle-btn.active {
+            border-color: var(--cyan-neon);
+            background: rgba(0, 229, 255, 0.14);
+            color: var(--cyan-neon);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .map-svg-container {
+            width: 100%;
+            height: auto;
+            position: relative;
+            background: #03060e;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        .map-svg-container svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Stations côtières interactives */
+        .station-pin {
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .station-pin:hover {
+            transform: scale(1.35);
+            filter: drop-shadow(0 0 8px var(--cyan-neon));
+        }
+
+        /* Timeline & Curseur interactif */
+        .timeline-controls {
+            margin-top: 18px;
+            background: #090f20;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .year-display {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .year-number {
+            font-size: 1.8rem;
+            color: var(--cyan-neon);
+            text-shadow: 0 0 12px var(--cyan-glow);
+            letter-spacing: 0.05em;
+        }
+
+        .sst-anomaly {
+            font-size: 0.85rem;
+            color: var(--coral-alert);
+            background: rgba(255, 82, 82, 0.1);
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            border-radius: var(--radius-full);
+            padding: 2px 10px;
+        }
+
+        .timeline-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .play-pause-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #111b33;
+            border: 1px solid var(--cyan-neon);
+            color: var(--cyan-neon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+        .play-pause-btn:hover {
+            background: var(--cyan-neon);
+            color: #05070f;
+            box-shadow: 0 0 14px var(--cyan-glow);
+        }
+
+        .slider-track {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        input[type="range"].year-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: var(--radius-full);
+            background: #131c36;
+            outline: none;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        input[type="range"].year-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            cursor: pointer;
+            box-shadow: 0 0 12px var(--cyan-glow);
+            border: 2px solid #05070f;
+            transition: var(--transition-smooth);
+        }
+
+        input[type="range"].year-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.8);
+        }
+
+        .year-ticks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 4px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .year-tick.active {
+            color: var(--cyan-neon);
+        }
+
+        /* Panneau d'analyse scientifique latéral */
+        .map-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .info-card {
+            background: #090f20;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 18px;
+        }
+
+        .info-card-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--cyan-neon);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .station-detail-box {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .station-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 12px;
+        }
+
+        .stat-item {
+            background: #111a31;
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .stat-item-val {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .scientific-insight-box {
+            background: #0c152a;
+            border-left: 3px solid var(--emerald-neon);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 14px;
+            font-size: 0.88rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* ========================================================
+           MODULE 3 : CARNET DE TERRAIN & BILAN DU CITOYEN
+           ======================================================== */
+        .results-summary-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 850px) {
+            .results-summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge-award-card {
+            background: linear-gradient(180deg, #0e172c 0%, #080d1a 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .badge-award-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: linear-gradient(180deg, var(--cyan-neon), transparent 70%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .badge-svg-display {
+            width: 170px;
+            height: 170px;
+            margin: 0 auto 16px;
+            filter: drop-shadow(0 0 18px var(--cyan-glow));
+        }
+
+        .badge-level-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--cyan-neon);
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: var(--radius-full);
+            padding: 4px 12px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .badge-title {
+            font-size: 1.25rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .badge-citizen-name {
+            font-size: 0.95rem;
+            color: var(--emerald-neon);
+            margin-bottom: 12px;
+        }
+
+        .stats-kpi-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: #090f20;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 1.5rem;
+            color: var(--cyan-neon);
+            margin-bottom: 4px;
+            text-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        .kpi-title {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Chaîne de valeur de la donnée */
+        .value-chain-section {
+            background: #080d1c;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .section-subhead {
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subdesc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            max-width: 850px;
+        }
+
+        .pipeline-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            position: relative;
+        }
+
+        .pipeline-step-item {
+            background: #0d152a;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .pipeline-step-item:hover {
+            border-color: var(--cyan-neon);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+
+        .step-index-tag {
+            font-size: 0.72rem;
+            color: var(--cyan-neon);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .step-item-title {
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .step-item-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Modal Certificat */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 15, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .certificate-card {
+            background: #0b1122;
+            border: 2px solid var(--cyan-neon);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        .certif-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .certif-close:hover {
+            color: var(--cyan-neon);
+        }
+
+        /* Footer */
+        .app-footer {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .app-footer a {
+            color: var(--text-secondary);
+        }
+        .app-footer a:hover {
+            color: var(--cyan-neon);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-container {
+                padding: 12px;
+            }
+            .header-section {
+                padding: 16px;
+            }
+            .partners-bar {
+                justify-content: center;
+            }
+            .module-stepper {
+                grid-template-columns: 1fr;
+            }
+            .card-panel {
+                padding: 18px;
+            }
+            .stats-kpi-row {
+                grid-template-columns: 1fr;
+            }
+            .pipeline-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ========================================================
+             1. EN-TÊTE ET CHARTE VISUELLE
+             ======================================================== -->
+        <header class="header-section">
+            <div class="partners-bar">
+                <!-- Badge Planète Mer -->
+                <div class="partner-badge" title="Association d'intérêt général pour la préservation de la vie marine">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="15" stroke="#00e5ff" stroke-width="1.5" fill="#0b172a" />
+                        <path d="M6 18C10 14 13 14 16 18C19 22 22 22 26 18" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" />
+                        <path d="M6 22C10 18 13 18 16 22C19 26 22 26 26 22" stroke="#2979ff" stroke-width="1.5" stroke-linecap="round" />
+                        <polygon points="16,6 18,12 24,12 19,15 21,21 16,17 11,21 13,15 8,12 14,12" fill="#00e676" opacity="0.85" />
+                    </svg>
+                    <div>
+                        <span class="partner-title">Association</span>
+                        <span class="partner-name">Planète Mer</span>
+                    </div>
+                </div>
+
+                <!-- Badge BioLit -->
+                <div class="partner-badge" title="Programme national d'observation de la biodiversité littorale">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="15" stroke="#00e676" stroke-width="1.5" fill="#0b172a" />
+                        <path d="M7 21C11 19 14 20 18 17C21 14 23 16 25 15" stroke="#00e676" stroke-width="2" stroke-linecap="round" />
+                        <circle cx="14" cy="13" r="5" stroke="#00e5ff" stroke-width="1.5" />
+                        <line x1="17.5" y1="16.5" x2="23" y2="22" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" />
+                        <circle cx="14" cy="13" r="2" fill="#00e5ff" />
+                    </svg>
+                    <div>
+                        <span class="partner-title">Programme</span>
+                        <span class="partner-name">BioLit</span>
+                    </div>
+                </div>
+
+                <!-- Badge Éco2Nature -->
+                <div class="partner-badge" title="Démarche de médiation scientifique et d'action écologique">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="15" stroke="#2979ff" stroke-width="1.5" fill="#0b172a" />
+                        <path d="M16 7C11 7 8 11 8 16C8 21 12 25 16 25C21 25 24 21 24 16C24 11 20 7 16 7Z" stroke="#2979ff" stroke-width="1.2" />
+                        <path d="M16 11C13.5 11 11.5 13.2 11.5 16C11.5 18.8 13.8 21 16.5 21C19.2 21 20.5 19 20.5 17C20.5 15 18.8 14 17 14" stroke="#00e676" stroke-width="1.5" stroke-linecap="round" />
+                        <circle cx="16" cy="16" r="2" fill="#00e5ff" />
+                    </svg>
+                    <div>
+                        <span class="partner-title">Démarche</span>
+                        <span class="partner-name">Éco2Nature</span>
+                    </div>
+                </div>
+
+                <!-- Badge MNHN / UMR BOREA -->
+                <div class="partner-badge" title="Muséum national d'Histoire naturelle / UMR BOREA">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="15" stroke="#ffb74d" stroke-width="1.5" fill="#0b172a" />
+                        <path d="M10 22V10L16 17L22 10V22" stroke="#ffb74d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 25H20" stroke="#ffb74d" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                    <div>
+                        <span class="partner-title">Recherche</span>
+                        <span class="partner-name">MNHN • BOREA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-title-block">
+                <span class="project-tag">Jeu Sérieux • Sciences Participatives Marines</span>
+                <h1 class="app-title">BioLit x Éco2Nature — Les Sentinelles du Littoral</h1>
+                <p class="app-subtitle">Explorez l'estran rocheux, maîtrisez le protocole d'observation scientifique et décryptez en direct la méridionalisation de la faune littorale sous l'effet du changement climatique.</p>
+            </div>
+
+            <!-- Illustration Vectorielle SVG : Estran Rocheux de Nuit -->
+            <div class="hero-illustration-wrapper" aria-label="Paysage nocturne d'un estran rocheux avec vagues bioluminescentes">
+                <svg viewBox="0 0 1000 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#02040a" />
+                            <stop offset="60%" stop-color="#071126" />
+                            <stop offset="100%" stop-color="#0c1b3a" />
+                        </linearGradient>
+                        <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#05152d" />
+                            <stop offset="100%" stop-color="#020713" />
+                        </linearGradient>
+                        <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.3" />
+                            <stop offset="100%" stop-color="#00e5ff" stop-opacity="0" />
+                        </radialGradient>
+                        <linearGradient id="beamGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+                            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.45" />
+                            <stop offset="100%" stop-color="#00e5ff" stop-opacity="0" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Ciel nocturne -->
+                    <rect width="1000" height="160" fill="url(#skyGrad)" />
+
+                    <!-- Étoiles scintillantes -->
+                    <g fill="#ffffff" opacity="0.6">
+                        <circle cx="45" cy="20" r="1" />
+                        <circle cx="120" cy="35" r="1.2" />
+                        <circle cx="190" cy="18" r="0.8" />
+                        <circle cx="260" cy="42" r="1.1" />
+                        <circle cx="340" cy="25" r="0.9" />
+                        <circle cx="430" cy="15" r="1.3" />
+                        <circle cx="520" cy="38" r="0.8" />
+                        <circle cx="610" cy="22" r="1" />
+                        <circle cx="700" cy="45" r="1.2" />
+                        <circle cx="790" cy="18" r="0.9" />
+                        <circle cx="870" cy="30" r="1" />
+                        <circle cx="940" cy="20" r="1.2" />
+                    </g>
+
+                    <!-- Lune et halo -->
+                    <circle cx="880" cy="45" r="30" fill="url(#moonGlow)" />
+                    <circle cx="880" cy="45" r="12" fill="#e0f7fa" opacity="0.85" />
+                    <circle cx="884" cy="43" r="11" fill="#071126" />
+
+                    <!-- Phare lointain sur falaise avec faisceau lumineux -->
+                    <polygon points="65,95 72,95 70,68 67,68" fill="#13223f" />
+                    <circle cx="68.5" cy="65" r="2.5" fill="#00e5ff" />
+                    <polygon points="70,65 380,45 390,75" fill="url(#beamGrad)" />
+
+                    <!-- Océan -->
+                    <path d="M0 95 Q 250 88 500 95 T 1000 95 L 1000 160 L 0 160 Z" fill="url(#seaGrad)" />
+
+                    <!-- Vaguelettes bioluminescentes -->
+                    <path d="M20 115 Q 120 108 220 114 T 420 112 T 620 115 T 820 113 T 980 115" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.5" />
+                    <path d="M60 128 Q 180 122 300 127 T 520 125 T 740 128 T 940 126" stroke="#00e676" stroke-width="1.5" fill="none" opacity="0.45" />
+
+                    <!-- Écueils et rochers d'estran en silhouette -->
+                    <path d="M0 160 L 0 120 Q 40 115 80 130 Q 130 110 180 138 Q 230 125 290 145 Q 340 135 390 152 Q 440 138 510 148 Q 570 132 640 155 Q 710 128 780 148 Q 850 118 920 142 Q 960 122 1000 140 L 1000 160 Z" fill="#050a18" />
+                    
+                    <!-- Détails de roches, balanes et algues Fucus -->
+                    <path d="M120 138 Q 135 125 150 142" stroke="#00e5ff" stroke-width="1" fill="none" opacity="0.6" />
+                    <path d="M310 146 Q 325 136 340 149" stroke="#00e676" stroke-width="1" fill="none" opacity="0.7" />
+                    <path d="M730 142 Q 745 130 760 146" stroke="#00e5ff" stroke-width="1" fill="none" opacity="0.6" />
+
+                    <!-- Silhouettes de laminaires flottantes phosphorescentes -->
+                    <path d="M480 158 Q 475 142 490 138 Q 505 134 500 158" fill="#00e676" opacity="0.3" />
+                    <path d="M840 158 Q 835 140 850 135 Q 865 130 860 158" fill="#00e5ff" opacity="0.25" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- ========================================================
+             PROGRESSION GLOBALE DU JEU ET SÉLECTION DES MODULES
+             ======================================================== -->
+        <section class="global-status-panel">
+            <div class="progress-header">
+                <div class="progress-label">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 6v6l4 2" />
+                    </svg>
+                    <span>Progression globale de la mission</span>
+                </div>
+                <div class="progress-percentage" id="globalProgressPercent">0%</div>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-bar" id="globalProgressBar"></div>
+            </div>
+
+            <nav class="module-stepper" aria-label="Étapes de la mission">
+                <button class="step-pill active" id="pill-step-1" onclick="switchModule(1)">
+                    <div class="step-number" id="num-step-1">1</div>
+                    <div>
+                        <span class="step-title">Protocole Estran</span>
+                        <span class="step-status" id="status-step-1">En cours • Quiz 5 Qs</span>
+                    </div>
+                </button>
+
+                <button class="step-pill" id="pill-step-2" onclick="switchModule(2)">
+                    <div class="step-number" id="num-step-2">2</div>
+                    <div>
+                        <span class="step-title">Carte & Climat</span>
+                        <span class="step-status" id="status-step-2">Série 2010–2030</span>
+                    </div>
+                </button>
+
+                <button class="step-pill" id="pill-step-3" onclick="switchModule(3)">
+                    <div class="step-number" id="num-step-3">3</div>
+                    <div>
+                        <span class="step-title">Carnet de Terrain</span>
+                        <span class="step-status" id="status-step-3">Bilan & Badge</span>
+                    </div>
+                </button>
+            </nav>
+        </section>
+
+        <!-- ========================================================
+             MODULE 1 : QUIZ PROTOCOLE & RIGUEUR SCIENTIFIQUE
+             ======================================================== -->
+        <main>
+            <section class="module-container active" id="module-1">
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div>
+                            <span class="module-badge">Module 1 • Rigueur Scientifique</span>
+                            <h2 class="module-heading">Le Protocole d'Observation sur l'Estran</h2>
+                            <p class="module-desc">Pour que les données citoyennes soient exploitables par les chercheurs du MNHN (UMR BOREA), chaque geste doit obéir à une démarche standardisée et éthique.</p>
+                        </div>
+                        <div class="partner-badge">
+                            <span class="partner-title">Score de Rigueur</span>
+                            <span class="partner-name" id="quizLiveScore" style="color: var(--cyan-neon);">0 / 100 pts</span>
+                        </div>
+                    </div>
+
+                    <!-- Contexte scénarisé -->
+                    <div class="scenario-box">
+                        <div class="scenario-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
+                        </div>
+                        <div class="scenario-text">
+                            <strong>Mise en situation :</strong> Vous êtes sur l'estran rocheux à marée basse (coefficient 105). Équipé de votre carnet de terrain BioLit et d'un smartphone, vous observez les cuvettes et ceintures algales. Répondez aux 5 questions clés pour valider votre rigueur méthodologique.
+                        </div>
+                    </div>
+
+                    <!-- Carte de la Question Active -->
+                    <div class="quiz-card" id="quizCard">
+                        <div class="quiz-meta-bar">
+                            <span class="question-tag" id="quizCategory">Catégorie</span>
+                            <span id="quizCounter">Question 1 sur 5</span>
+                        </div>
+
+                        <h3 class="quiz-question-title" id="quizQuestionText">Chargement de la question...</h3>
+
+                        <div class="options-list" id="quizOptionsList">
+                            <!-- Les options A, B, C, D seront injectées dynamiquement par JS -->
+                        </div>
+
+                        <div class="quiz-actions">
+                            <button class="btn btn-primary" id="quizValidateBtn" onclick="validateCurrentAnswer()" disabled>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                <span>Valider ma réponse</span>
+                            </button>
+
+                            <button class="btn btn-outline" id="quizNextBtn" onclick="nextQuestion()" style="display: none;">
+                                <span>Question suivante</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </button>
+
+                            <button class="btn btn-success" id="quizFinishBtn" onclick="switchModule(2)" style="display: none;">
+                                <span>Accéder au Module 2 : Carte & Climat</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Encadré Pédagogique Guide Éco2Nature -->
+                        <div class="pedagogic-feedback" id="pedagogicFeedback">
+                            <div class="feedback-header">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" y1="16" x2="12" y2="12" />
+                                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                                </svg>
+                                <span>L'Éclairage du Guide Éco2Nature & des Chercheurs MNHN</span>
+                            </div>
+                            <div class="feedback-content" id="pedagogicText">
+                                Explication détaillée...
+                            </div>
+                            <div class="feedback-tip" id="pedagogicTip">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                </svg>
+                                <span id="tipText">Conseil de terrain pour votre prochaine sortie.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================
+                 MODULE 2 : CARTE DYNAMIQUE & SÉRIE TEMPORELLE
+                 ======================================================== -->
+            <section class="module-container" id="module-2">
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div>
+                            <span class="module-badge" style="color: var(--cyan-neon); border-color: rgba(0, 229, 255, 0.4); background: rgba(0, 229, 255, 0.1);">Module 2 • Biogéographie & Océanographie</span>
+                            <h2 class="module-heading">Carte Dynamique : La Méridionalisation du Littoral</h2>
+                            <p class="module-desc">Visualisez l'impact du réchauffement marin sur la façade atlantique et la Manche entre 2010 et 2030 grâce aux suivis BioLit.</p>
+                        </div>
+
+                        <!-- Sélecteur d'Espèces Cibles -->
+                        <div class="map-species-toggle">
+                            <button class="toggle-btn active" id="btn-sp-patelle" onclick="setTargetSpecies('patelle')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="9" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                <span>Patelle rustique vs Commune</span>
+                            </button>
+                            <button class="toggle-btn" id="btn-sp-gibbule" onclick="setTargetSpecies('gibbule')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 22 22 2 22" />
+                                </svg>
+                                <span>Gibbule pennante vs Cendrée</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="map-layout-grid">
+                        <!-- Colonne de Gauche : Vue SVG et Timeline -->
+                        <div>
+                            <div class="map-viewport-card">
+                                <div class="map-svg-container">
+                                    <svg viewBox="0 0 960 780" preserveAspectRatio="xMidYMid meet" id="interactiveMapSvg" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <!-- Gradient eau océan Atlantique / Manche -->
+                                            <radialGradient id="oceanBg" cx="35%" cy="50%" r="75%">
+                                                <stop offset="0%" stop-color="#0a152d" />
+                                                <stop offset="60%" stop-color="#050a17" />
+                                                <stop offset="100%" stop-color="#03060e" />
+                                            </radialGradient>
+
+                                            <!-- Gradients thermiques SST (Sea Surface Temp) 2010 vs 2030 -->
+                                            <linearGradient id="thermalSst" x1="0%" y1="100%" x2="0%" y2="0%">
+                                                <stop offset="0%" stop-color="#ff5252" stop-opacity="0.35" id="sstStopSouth" />
+                                                <stop offset="45%" stop-color="#ffb74d" stop-opacity="0.22" id="sstStopMid" />
+                                                <stop offset="80%" stop-color="#00e5ff" stop-opacity="0.12" id="sstStopNorth" />
+                                                <stop offset="100%" stop-color="#0088ff" stop-opacity="0.05" />
+                                            </linearGradient>
+
+                                            <!-- Filtre lueur néon pour stations et fronts -->
+                                            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                            </filter>
+                                        </defs>
+
+                                        <!-- Fond océanique -->
+                                        <rect width="960" height="780" fill="url(#oceanBg)" />
+
+                                        <!-- Grille bathymétrique et coordonnées géographiques -->
+                                        <g stroke="rgba(0, 229, 255, 0.07)" stroke-width="0.8" stroke-dasharray="3 4">
+                                            <line x1="80" y1="120" x2="880" y2="120" /> <!-- 50°N -->
+                                            <line x1="80" y1="280" x2="880" y2="280" /> <!-- 48°N -->
+                                            <line x1="80" y1="480" x2="880" y2="480" /> <!-- 46°N -->
+                                            <line x1="80" y1="680" x2="880" y2="680" /> <!-- 44°N -->
+                                            <line x1="180" y1="40" x2="180" y2="740" /> <!-- 4°W -->
+                                            <line x1="380" y1="40" x2="380" y2="740" /> <!-- 2°W -->
+                                            <line x1="580" y1="40" x2="580" y2="740" /> <!-- 0° -->
+                                            <line x1="780" y1="40" x2="780" y2="740" /> <!-- 2°E -->
+                                        </g>
+
+                                        <!-- Étiquettes coordonnées -->
+                                        <g fill="rgba(160, 174, 192, 0.45)" font-size="11" letter-spacing="1">
+                                            <text x="95" y="115">50°N — Manche Est / Mer du Nord</text>
+                                            <text x="95" y="275">48°N — Bretagne / Mer d'Iroise</text>
+                                            <text x="95" y="475">46°N — Golfe de Gascogne / Vendée</text>
+                                            <text x="95" y="675">44°N — Bassin d'Arcachon / Pays Basque</text>
+                                        </g>
+
+                                        <!-- Calque thermique SST marin dynamique -->
+                                        <rect x="0" y="0" width="960" height="780" fill="url(#thermalSst)" />
+
+                                        <!-- Tracé vectoriel précis du littoral Atlantique et Manche de France -->
+                                        <!-- Terres émergées (fond sombre contrasté) -->
+                                        <path d="M 770 40 
+                                                 L 745 65 L 710 100 L 665 145 L 635 165 L 595 185 L 530 215 
+                                                 L 485 225 L 435 210 L 400 170 L 370 175 L 350 205 L 365 245 
+                                                 L 395 270 L 360 288 L 310 292 L 255 295 L 205 300 L 160 320 
+                                                 L 135 340 L 165 365 L 140 380 L 125 415 L 145 440 L 190 455 
+                                                 L 245 490 L 275 485 L 295 505 L 315 525 L 295 550 L 325 580 
+                                                 L 340 625 L 365 660 L 370 710 L 350 750 L 330 765 
+                                                 L 960 765 L 960 40 Z" 
+                                              fill="#0d1628" stroke="rgba(0, 229, 255, 0.4)" stroke-width="1.8" />
+
+                                        <!-- Îles littorales majeures (Oléron, Ré, Yeu, Noirmoutier, Belle-Île, Ouessant) -->
+                                        <!-- Île d'Oléron -->
+                                        <path d="M 320 620 L 332 610 L 338 630 L 325 640 Z" fill="#0d1628" stroke="#00e5ff" stroke-width="1.2" />
+                                        <!-- Île de Ré -->
+                                        <path d="M 305 595 L 325 588 L 330 598 L 310 605 Z" fill="#0d1628" stroke="#00e5ff" stroke-width="1.2" />
+                                        <!-- Île d'Yeu -->
+                                        <circle cx="282" cy="552" r="5" fill="#0d1628" stroke="#00e5ff" stroke-width="1.2" />
+                                        <!-- Belle-Île-en-Mer -->
+                                        <ellipse cx="230" cy="510" rx="9" ry="5" fill="#0d1628" stroke="#00e5ff" stroke-width="1.2" />
+                                        <!-- Ouessant -->
+                                        <circle cx="108" cy="335" r="4.5" fill="#0d1628" stroke="#00e5ff" stroke-width="1.2" />
+
+                                        <!-- Aire de colonisation de l'espèce (remplissage dynamique néon) -->
+                                        <path id="speciesSpreadZone" d="M 330 765 L 350 750 L 370 710 L 365 660 L 340 625 L 325 580 L 200 580 L 200 765 Z" 
+                                              fill="rgba(0, 229, 255, 0.14)" stroke="none" />
+
+                                        <!-- Ligne dynamique du Front Septentrional d'Expansion -->
+                                        <line id="northFrontLine" x1="100" y1="620" x2="420" y2="620" 
+                                              stroke="#00e676" stroke-width="2.5" stroke-dasharray="6 4" filter="url(#neonGlow)" />
+                                        <g id="northFrontLabelGroup" transform="translate(425, 624)">
+                                            <rect x="0" y="-12" width="220" height="24" rx="4" fill="#060c1c" stroke="#00e676" stroke-width="1" />
+                                            <text x="8" y="4" fill="#00e676" font-size="11" letter-spacing="0.5">FRONT D'EXPANSION BIO-LIT</text>
+                                        </g>
+
+                                        <!-- Stations côtières de suivi BioLit -->
+                                        <!-- 1. Hendaye / Pays Basque -->
+                                        <g class="station-pin" id="pin-hendaye" onclick="selectStation('hendaye')" transform="translate(350, 750)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.6s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.8;0;0.8" dur="2.6s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="12" y="4" fill="#f0f4f8" font-size="11">1. Hendaye (Pays Basque)</text>
+                                        </g>
+
+                                        <!-- 2. Bassin d'Arcachon -->
+                                        <g class="station-pin" id="pin-arcachon" onclick="selectStation('arcachon')" transform="translate(370, 710)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.8s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.8s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="12" y="4" fill="#f0f4f8" font-size="11">2. Bassin d'Arcachon</text>
+                                        </g>
+
+                                        <!-- 3. Pertuis Charentais / Île d'Oléron -->
+                                        <g class="station-pin" id="pin-oleron" onclick="selectStation('oleron')" transform="translate(340, 625)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="3s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="-160" y="4" fill="#f0f4f8" font-size="11">3. Pertuis Charentais (Oléron/Ré)</text>
+                                        </g>
+
+                                        <!-- 4. Pornic / Estuaire de la Loire -->
+                                        <g class="station-pin" id="pin-pornic" onclick="selectStation('pornic')" transform="translate(315, 525)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.7s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.7s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="12" y="4" fill="#f0f4f8" font-size="11">4. Pornic (Estuaire Loire)</text>
+                                        </g>
+
+                                        <!-- 5. Golfe du Morbihan / Bretagne Sud -->
+                                        <g class="station-pin" id="pin-morbihan" onclick="selectStation('morbihan')" transform="translate(275, 485)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.9s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.9s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="-155" y="4" fill="#f0f4f8" font-size="11">5. Golfe du Morbihan</text>
+                                        </g>
+
+                                        <!-- 6. Mer d'Iroise / Brest -->
+                                        <g class="station-pin" id="pin-iroise" onclick="selectStation('iroise')" transform="translate(135, 365)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="3.1s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="3.1s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="-140" y="-8" fill="#f0f4f8" font-size="11">6. Mer d'Iroise & Brest</text>
+                                        </g>
+
+                                        <!-- 7. Roscoff / Bretagne Nord -->
+                                        <g class="station-pin" id="pin-roscoff" onclick="selectStation('roscoff')" transform="translate(205, 300)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.5s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="-35" y="-12" fill="#f0f4f8" font-size="11">7. Roscoff (Trégor)</text>
+                                        </g>
+
+                                        <!-- 8. Saint-Malo & Cotentin -->
+                                        <g class="station-pin" id="pin-saintmalo" onclick="selectStation('saintmalo')" transform="translate(380, 270)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.8s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.8s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="12" y="4" fill="#f0f4f8" font-size="11">8. Saint-Malo / Granville</text>
+                                        </g>
+
+                                        <!-- 9. Baie de Seine & Côte d'Albâtre -->
+                                        <g class="station-pin" id="pin-seine" onclick="selectStation('seine')" transform="translate(560, 200)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="3s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="12" y="4" fill="#f0f4f8" font-size="11">9. Baie de Seine / Le Havre</text>
+                                        </g>
+
+                                        <!-- 10. Côte d'Opale & Mer du Nord -->
+                                        <g class="station-pin" id="pin-opale" onclick="selectStation('opale')" transform="translate(720, 90)">
+                                            <circle cx="0" cy="0" r="10" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" class="station-pulse">
+                                                <animate attributeName="r" values="5;14;5" dur="2.7s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.7s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="0" cy="0" r="5" fill="#00e5ff" class="station-dot" />
+                                            <text x="-165" y="4" fill="#f0f4f8" font-size="11">10. Boulogne / Mer du Nord</text>
+                                        </g>
+
+                                        <!-- Légende cartographique intégrée -->
+                                        <g transform="translate(30, 640)">
+                                            <rect width="210" height="110" rx="6" fill="rgba(8, 14, 28, 0.88)" stroke="rgba(0, 229, 255, 0.3)" stroke-width="1" />
+                                            <text x="12" y="20" fill="#00e5ff" font-size="10" letter-spacing="0.5">LÉGENDE OCÉANOGRAPHIQUE</text>
+                                            
+                                            <!-- Ligne du front -->
+                                            <line x1="12" y1="36" x2="36" y2="36" stroke="#00e676" stroke-width="2.5" stroke-dasharray="4 2" />
+                                            <text x="44" y="39" fill="#f0f4f8" font-size="9.5">Front nord d'expansion</text>
+
+                                            <!-- Aire occupée -->
+                                            <rect x="12" y="50" width="24" height="10" fill="rgba(0, 229, 255, 0.25)" stroke="#00e5ff" stroke-width="0.8" />
+                                            <text x="44" y="59" fill="#f0f4f8" font-size="9.5">Aire établie BioLit</text>
+
+                                            <!-- Puce station -->
+                                            <circle cx="24" cy="78" r="4.5" fill="#00e676" />
+                                            <text x="44" y="81" fill="#f0f4f8" font-size="9.5">Station côtière active</text>
+
+                                            <!-- SST gradient -->
+                                            <rect x="12" y="92" width="24" height="6" fill="url(#thermalSst)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" />
+                                            <text x="44" y="98" fill="#f0f4f8" font-size="9.5">Isothermes SST (15–23°C)</text>
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <!-- Contrôles temporels (Timeline Slider) -->
+                                <div class="timeline-controls">
+                                    <div class="timeline-header">
+                                        <div class="year-display">
+                                            <span style="font-size: 0.82rem; color: var(--text-secondary); text-transform: uppercase;">Année d'observation :</span>
+                                            <span class="year-number" id="currentYearDisplay">2010</span>
+                                        </div>
+                                        <div class="sst-anomaly" id="sstAnomalyBadge">Anomalie thermique marine : +0.2 °C</div>
+                                    </div>
+
+                                    <div class="timeline-slider-row">
+                                        <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlayAnimation()" title="Lancer l'animation automatique">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" id="playIcon">
+                                                <polygon points="5 3 19 12 5 21 5 3" />
+                                            </svg>
+                                        </button>
+
+                                        <div class="slider-track">
+                                            <input type="range" min="2010" max="2030" step="5" value="2010" class="year-slider" id="yearSlider" oninput="onYearSliderChange(this.value)">
+                                            <div class="year-ticks">
+                                                <span class="year-tick active" id="tick-2010">2010</span>
+                                                <span class="year-tick" id="tick-2015">2015</span>
+                                                <span class="year-tick" id="tick-2020">2020</span>
+                                                <span class="year-tick" id="tick-2025">2025</span>
+                                                <span class="year-tick" id="tick-2030">2030 (Proj.)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Colonne de Droite : Télémétrie de la Station & Analyse MNHN -->
+                        <div class="map-sidebar">
+                            <!-- Fiche de la station sélectionnée -->
+                            <div class="info-card">
+                                <div class="info-card-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                    <span id="stationNameDisplay">Station : Pertuis Charentais</span>
+                                </div>
+
+                                <div class="station-detail-box">
+                                    <p id="stationSector">Façade Atlantique Centre • Île d'Oléron & Ré</p>
+                                    
+                                    <div class="station-stat-grid">
+                                        <div class="stat-item">
+                                            <span class="stat-item-label">Temp. Eau Été</span>
+                                            <span class="stat-item-val" id="stationTempDisplay">19.2 °C</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-item-label">Statut Espèce</span>
+                                            <span class="stat-item-val" id="stationStatusDisplay" style="color: var(--emerald-neon);">Front Actif</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-item-label">Quadrats BioLit</span>
+                                            <span class="stat-item-val" id="stationObsCount">142 relevés</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-item-label">Densité Moy.</span>
+                                            <span class="stat-item-val" id="stationDensity">8 ind. / m²</span>
+                                        </div>
+                                    </div>
+
+                                    <p id="stationObservationNotes" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
+                                        En 2010, cette zone constitue la limite septentrionale historique de la patelle rustique en Atlantique français. Les observateurs bénévoles signalent une reproduction active sur les estrans rocheux abrités.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Décryptage scientifique Éco2Nature -->
+                            <div class="info-card">
+                                <div class="info-card-title" style="color: var(--emerald-neon);">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                    </svg>
+                                    <span>Comprendre la Méridionalisation</span>
+                                </div>
+
+                                <div class="scientific-insight-box" id="insightBoxText">
+                                    <strong>Qu'est-ce que la méridionalisation ?</strong><br>
+                                    Sous l'effet du réchauffement des eaux (+0.3 à +1.4°C en 20 ans), les espèces marines d'affinité tiède ou méridionale (lusitaniennes) étendent leur aire de distribution vers le Nord, au rythme moyen de 15 à 30 km par décennie.
+                                </div>
+
+                                <div style="margin-top: 14px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                    <strong>Le rôle irremplaçable de BioLit :</strong> Aucun laboratoire académique n'a les moyens financiers ni humains d'échantillonner 5 000 km de côtes chaque semaine. Les milliers de photos géoréférencées envoyées par les citoyens permettent à l'UMR BOREA de détecter les premiers individus pionniers dès leur apparition.
+                                </div>
+
+                                <div style="margin-top: 18px; text-align: center;">
+                                    <button class="btn btn-outline" style="width: 100%; font-size: 0.85rem;" onclick="switchModule(3)">
+                                        <span>Consulter mon Bilan de Sentinelle</span>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================
+                 MODULE 3 : CARNET DE TERRAIN & BILAN DU CITOYEN
+                 ======================================================== -->
+            <section class="module-container" id="module-3">
+                <div class="card-panel">
+                    <div class="card-panel-header">
+                        <div>
+                            <span class="module-badge">Module 3 • Bilan & Reconnaissance</span>
+                            <h2 class="module-heading">Carnet de Terrain du Citoyen-Chercheur</h2>
+                            <p class="module-desc">Synthèse de votre engagement scientifique, attribution de votre accréditation officielle et découverte de l'impact réel de vos données sur les politiques de conservation marine.</p>
+                        </div>
+                    </div>
+
+                    <div class="results-summary-grid">
+                        <!-- Badge Vectoriel SVG personnalisé -->
+                        <div class="badge-award-card">
+                            <!-- SVG Badge Vectoriel Éco2Nature x BioLit -->
+                            <div class="badge-svg-display">
+                                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="badgeGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#00e5ff" />
+                                            <stop offset="50%" stop-color="#00e676" />
+                                            <stop offset="100%" stop-color="#2979ff" />
+                                        </linearGradient>
+                                        <radialGradient id="badgeInnerBg" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0%" stop-color="#142242" />
+                                            <stop offset="100%" stop-color="#070d1c" />
+                                        </radialGradient>
+                                    </defs>
+
+                                    <!-- Anneau extérieur ornementé -->
+                                    <circle cx="100" cy="100" r="92" stroke="url(#badgeGold)" stroke-width="2.5" stroke-dasharray="4 2" />
+                                    <circle cx="100" cy="100" r="85" fill="url(#badgeInnerBg)" stroke="#00e5ff" stroke-width="1" />
+
+                                    <!-- Rayons de la boussole marine -->
+                                    <polygon points="100,24 105,85 100,90 95,85" fill="#00e5ff" opacity="0.9" />
+                                    <polygon points="100,176 105,115 100,110 95,115" fill="#00e5ff" opacity="0.6" />
+                                    <polygon points="24,100 85,105 90,100 85,95" fill="#00e5ff" opacity="0.6" />
+                                    <polygon points="176,100 115,105 110,100 115,95" fill="#00e5ff" opacity="0.6" />
+
+                                    <!-- Étoile centrale de mer stylisée -->
+                                    <circle cx="100" cy="100" r="45" fill="#0b172e" stroke="#00e676" stroke-width="1.5" />
+                                    
+                                    <!-- Silhouette coquillage Patelle / Vague -->
+                                    <path d="M78 112 Q 100 75 122 112 Q 100 120 78 112 Z" fill="#00e676" opacity="0.25" stroke="#00e676" stroke-width="1.5" />
+                                    <circle cx="100" cy="98" r="4" fill="#00e5ff" />
+
+                                    <!-- Micro étoiles du savoir -->
+                                    <circle cx="70" cy="65" r="2" fill="#ffb74d" />
+                                    <circle cx="130" cy="65" r="2" fill="#ffb74d" />
+                                    <circle cx="70" cy="135" r="2" fill="#ffb74d" />
+                                    <circle cx="130" cy="135" r="2" fill="#ffb74d" />
+                                </svg>
+                            </div>
+
+                            <span class="badge-level-tag" id="badgeAwardTag">Accréditation Officielle</span>
+                            <h3 class="badge-title" id="badgeAwardTitle">Sentinelle Ambassadrice</h3>
+                            <div class="badge-citizen-name">Éco2Nature • BioLit • MNHN</div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                Attestation délivrée au titre de l'évaluation rigoureuse du protocole d'observation de la biodiversité littorale.
+                            </p>
+                        </div>
+
+                        <!-- KPIs & Synthèse détaillée -->
+                        <div>
+                            <div class="stats-kpi-row">
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="finalQuizScoreDisplay">0 / 100</div>
+                                    <div class="kpi-title">Rigueur Protocole</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="finalStationsInspected">10 / 10</div>
+                                    <div class="kpi-title">Stations Observées</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="finalClimateYears">2010–2030</div>
+                                    <div class="kpi-title">Série Temporelle</div>
+                                </div>
+                            </div>
+
+                            <div class="info-card" style="margin-bottom: 20px;">
+                                <div class="info-card-title">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                    </svg>
+                                    <span>Mention d'évaluation pédagogique</span>
+                                </div>
+                                <p id="finalPedagogicAppreciation" style="font-size: 0.92rem; color: var(--text-main); line-height: 1.5;">
+                                    Félicitations ! Vous avez démontré une compréhension exemplaire des exigences de la collecte participative en écologie benthique. Vos observations futures contribueront directement aux modèles prédictifs du Muséum national d'Histoire naturelle.
+                                </p>
+                            </div>
+
+                            <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                                <button class="btn btn-primary" onclick="openCertificateModal()">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" />
+                                        <polyline points="21 15 16 10 5 21" />
+                                    </svg>
+                                    <span>Afficher mon Attestation Officielle</span>
+                                </button>
+                                <button class="btn btn-outline" onclick="resetGameExperience()">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 4v6h-6" />
+                                        <path d="M1 20v-6h6" />
+                                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                                    </svg>
+                                    <span>Recommencer la mission</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chaîne de valeur de la donnée citoyenne -->
+                    <section class="value-chain-section">
+                        <h3 class="section-subhead">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2">
+                                <circle cx="18" cy="5" r="3" />
+                                <circle cx="6" cy="12" r="3" />
+                                <circle cx="18" cy="19" r="3" />
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                            </svg>
+                            <span>La Chaîne de Valeur de la Donnée : De l'Estran aux Décisions Politiques</span>
+                        </h3>
+                        <p class="section-subdesc">
+                            Une observation BioLit n'est pas une simple photo sur un smartphone : elle suit un circuit scientifique d'une rigueur absolue jusqu'aux plus hautes instances de protection des océans.
+                        </p>
+
+                        <div class="pipeline-steps">
+                            <!-- Étape 1 -->
+                            <div class="pipeline-step-item">
+                                <div class="step-index-tag">Étape 1 • Plage</div>
+                                <h4 class="step-item-title">Collecte sur l'Estran</h4>
+                                <p class="step-item-desc">Le citoyen applique le protocole BioLit : géolocalisation GPS, date/heure de marée, quadrats et respect de la roche.</p>
+                            </div>
+
+                            <!-- Étape 2 -->
+                            <div class="pipeline-step-item">
+                                <div class="step-index-tag">Étape 2 • Réseau</div>
+                                <h4 class="step-item-title">Validation Collective</h4>
+                                <p class="step-item-desc">Les modérateurs Planète Mer & Éco2Nature et la communauté confirment l'identification taxonomique via des clés morphologiques.</p>
+                            </div>
+
+                            <!-- Étape 3 -->
+                            <div class="pipeline-step-item">
+                                <div class="step-index-tag">Étape 3 • Bases</div>
+                                <h4 class="step-item-title">Bases Nationales INPN</h4>
+                                <p class="step-item-desc">Les données validées sont intégrées à l'Inventaire National du Patrimoine Naturel (INPN) et au GBIF international en accès libre.</p>
+                            </div>
+
+                            <!-- Étape 4 -->
+                            <div class="pipeline-step-item">
+                                <div class="step-index-tag">Étape 4 • Recherche</div>
+                                <h4 class="step-item-title">Modélisation MNHN</h4>
+                                <p class="step-item-desc">Les chercheurs de l'UMR BOREA publient dans des revues internationales sur la vitesse de déplacement des isothermes marins.</p>
+                            </div>
+
+                            <!-- Étape 5 -->
+                            <div class="pipeline-step-item">
+                                <div class="step-index-tag">Étape 5 • Impact</div>
+                                <h4 class="step-item-title">Gestion & Aires Marines</h4>
+                                <p class="step-item-desc">Création de Zones de Protection Forte (ZPF), arrêtés de réglementation de la pêche à pied et directives européennes DCSMM.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal Attestation Officielle -->
+        <div class="modal-overlay" id="certificateModal" onclick="if(event.target === this) closeCertificateModal()">
+            <div class="certificate-card">
+                <button class="certif-close" onclick="closeCertificateModal()">&times;</button>
+                <div class="partner-badge" style="margin-bottom: 16px;">
+                    <span class="partner-title">Accréditation Sciences Participatives</span>
+                </div>
+                <h2 style="font-size: 1.6rem; color: #ffffff; margin-bottom: 8px;">Attestation de Sentinelle du Littoral</h2>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px;">Programme National BioLit • Partenariat Éco2Nature & MNHN / UMR BOREA</p>
+
+                <div style="background: rgba(0, 229, 255, 0.05); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; text-align: left;">
+                    <p style="font-size: 0.95rem; color: var(--text-main); margin-bottom: 8px;">
+                        Certifie que l'observateur citoyen a validé avec succès le module de formation aux protocoles scientifiques d'observation de la biodiversité benthique.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem; color: var(--text-secondary); margin-top: 14px;">
+                        <div>Statut : <span id="modalStatut" style="color: var(--emerald-neon);">Sentinelle Ambassadrice</span></div>
+                        <div>Score de Rigueur : <span id="modalScore" style="color: var(--cyan-neon);">100 / 100</span></div>
+                        <div>Date d'émission : <span id="modalDate">Aujourd'hui</span></div>
+                        <div>Référentiel : UMR BOREA / BioLit</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: center; gap: 14px;">
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 6 2 18 2 18 9" />
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                            <rect x="6" y="14" width="12" height="8" />
+                        </svg>
+                        <span>Imprimer l'Attestation</span>
+                    </button>
+                    <button class="btn btn-outline" onclick="closeCertificateModal()">Fermer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>BioLit est une initiative de l'association <strong>Planète Mer</strong> en partenariat avec le <strong>Muséum national d'Histoire naturelle</strong> (UMR BOREA). Accompagnement pédagogique par la démarche <strong>Éco2Nature</strong>.</p>
+            <p style="margin-top: 6px;">Données ouvertes pour la recherche en macro-écologie marine et la préservation de la biodiversité de nos estrans.</p>
+        </footer>
+
+    </div>
+
+    <!-- ========================================================
+         LOGIQUE JAVASCRIPT NATIVE COMPLÈTE
+         ======================================================== -->
+    <script>
+        /* ========================================================
+           ÉTAT GLOBAL DU JEU
+           ======================================================== */
+        const gameState = {
+            currentModule: 1,
+            quizIndex: 0,
+            quizScore: 0,
+            userAnswers: [],
+            inspectedStations: new Set(),
+            selectedSpecies: 'patelle', // 'patelle' ou 'gibbule'
+            currentYear: 2010,
+            isPlaying: false,
+            playTimer: null
+        };
+
+        /* ========================================================
+           DONNÉES DU QUIZ PROTOCOLE BIOLIT (5 QUESTIONS)
+           ======================================================== */
+        const quizQuestions = [
+            {
+                category: "Géoréférencement & Horodatage",
+                question: "1. Pourquoi la précision de la géolocalisation décimale et de la date/heure est-elle fondamentale pour les chercheurs du MNHN ?",
+                options: [
+                    { letter: "A", text: "Pour établir un classement touristique estival des plages les plus fréquentées." },
+                    { letter: "B", text: "Pour corréler précisément la présence d'espèces avec les hauteurs de marée, l'étagement de l'estran et les données satellites de température marine de surface (SST Copernicus)." },
+                    { letter: "C", text: "Uniquement pour envoyer une carte postale de remerciement au bénévole ayant fait l'observation." },
+                    { letter: "D", text: "La géolocalisation à 50 km près suffit amplement pour les mollusques et invertébrés marins." }
+                ],
+                correctIndex: 1,
+                pedagogicExplanation: "Sur l'estran, la vie s'organise en ceintures verticales millimétrées (étage supralittoral, médiolittoral, infralittoral). Un décalage de quelques mètres ou d'une heure modifie totalement le temps d'émersion et le stress thermique subi par les organismes. En croisant le GPS précis et l'heure avec les marégraphes du SHOM et les données satellites du programme Copernicus, l'UMR BOREA modélise la tolérance thermique réelle des espèces face aux vagues de chaleur marines.",
+                tipText: "Activez toujours le GPS de votre smartphone quelques secondes avant de photographier pour garantir une précision à moins de 5 mètres."
+            },
+            {
+                category: "Éthique & Protection de l'Estran",
+                question: "2. Que faut-il impérativement faire après avoir retourné une pierre sur l'estran pour observer la faune cachée ?",
+                options: [
+                    { letter: "A", text: "La laisser sur la tranche afin que le soleil et l'air assèchent les éponges et algues encroûtantes." },
+                    { letter: "B", text: "La lancer au loin dans une flaque profonde pour sauver les crabes de la marée descendante." },
+                    { letter: "C", text: "La replacer délicatement et exactement dans sa position initiale, sans écraser les organismes sessiles qui la colonisent." },
+                    { letter: "D", text: "Empiler plusieurs blocs rocheux pour construire un abri artificiel pérenne pour les poissons." }
+                ],
+                correctIndex: 2,
+                pedagogicExplanation: "C'est la règle d'or absolue de tout citoyen-chercheur sur le littoral ! La face inférieure des blocs rocheux abrite une communauté 'sciaphile' (fuyant la lumière) hypersensible : ascidies, éponges, bryozoaires et pontes de gastéropodes. Exposés aux ultraviolets, au vent et aux prédateurs, ces êtres vivants meurent en quelques dizaines de minutes. Retourner une pierre sans la remettre détruit des mois d'équilibre biologique.",
+                tipText: "Ne retournez que des pierres de taille modeste, observez rapidement et reposez-les millimètre par millimètre avec précaution."
+            },
+            {
+                category: "Prise de Vue & Taxonomie",
+                question: "3. Comment prendre une photo exploitable scientifiquement pour la validation des espèces sur la plateforme BioLit ?",
+                options: [
+                    { letter: "A", text: "Prendre un cliché de très loin avec un filtre artistique saturé pour sublimer les contrastes." },
+                    { letter: "B", text: "Prendre une photo rapprochée nette sous plusieurs angles diagnostiques (apex, ouverture, ombilic), avec une échelle visuelle (pièce, réglet ou doigt) et sans détruire l'animal." },
+                    { letter: "C", text: "Détacher l'animal avec un couteau et le poser sur un papier blanc en plein soleil pour éliminer les ombres." },
+                    { letter: "D", text: "Une photo floue suffit amplement car les algorithmes de la plateforme devinent automatiquement toutes les espèces." }
+                ],
+                correctIndex: 1,
+                pedagogicExplanation: "La validation taxonomique par les experts du MNHN et les modérateurs BioLit s'appuie sur des critères morphologiques très précis : le nombre de spires, la forme de l'ombilic, les stries de croissance ou la présence d'une dent sur la coquille. Une photo floue ou prise sous un mauvais angle rend la donnée 'non évaluable'. La présence d'un repère d'échelle (pièce de monnaie, réglet ou pointe de crayon) permet d'estimer la taille et l'âge de l'individu.",
+                tipText: "Stabilisez vos deux coudes sur vos genoux ou sur la roche pour éviter tout flou de bougé à marée basse."
+            },
+            {
+                category: "Statistique & Modélisation",
+                question: "4. Pourquoi est-il indispensable d'indiquer les zones prospectées sans observation (les 'données d'absence') ?",
+                options: [
+                    { letter: "A", text: "Pour prouver que le bénévole n'a pas bien cherché sur l'estran rocheux." },
+                    { letter: "B", text: "Pour faire des économies d'espace de stockage sur les serveurs informatiques du programme." },
+                    { letter: "C", text: "Parce qu'une absence confirmée dans un protocole d'effort constant permet aux écologues de distinguer une véritable régression ou limite d'aire biogéographique d'un simple manque d'observateurs." },
+                    { letter: "D", text: "Les données d'absence sont inutiles et sont automatiquement supprimées des analyses scientifiques." }
+                ],
+                correctIndex: 2,
+                pedagogicExplanation: "En macro-écologie, le 'zéro' est une donnée tout aussi précieuse que le 'un'. Si aucun observateur ne note l'absence d'une espèce, les chercheurs ne peuvent pas savoir si elle a disparu ou si personne n'a cherché à cet endroit (le biais de détection). Les données d'absence permettent d'alimenter les modèles d'occupation des sols ('Occupancy models') et de tracer les fronts d'arrêt réels des espèces face au réchauffement.",
+                tipText: "Signalez toujours vos quadrats vides : pour la science, savoir où une espèce ne vit pas est tout aussi décisif que savoir où elle vit."
+            },
+            {
+                category: "Écologie des Habitats Marins",
+                question: "5. Quel est l'impact du piétinement répété sur les champs d'algues brunes (Fucus, Ascophylles) ?",
+                options: [
+                    { letter: "A", text: "Le piétinement favorise la pousse rapide de nouvelles algues géantes." },
+                    { letter: "B", text: "Il sectionne les frondes, arrache les crampons de fixation sur la roche et détruit la canopée protectrice indispensable à la survie des micro-organismes contre la dessiccation." },
+                    { letter: "C", text: "Il n'a aucun impact car les algues marines sont plastiques et invulnérables aux chocs mécaniques." },
+                    { letter: "D", text: "Il transforme l'estran en plage de sable fin bénéfique pour la colonisation des coraux atlantiques." }
+                ],
+                correctIndex: 1,
+                pedagogicExplanation: "Les grandes algues brunes (Fucales et Laminaires) sont des 'espèces ingénieures' fondamentales. À marée basse, leur épaisse canopée retient l'humidité et maintient une température tampon sous laquelle s'abritent des centaines d'espèces de mollusques, crustacés et juvéniles de poissons. Le piétinement répété arrache les disques adhésifs (crampons) qui mettent plusieurs années à se reconstituer, provoquant la désertification thermique du substrat rocheux.",
+                tipText: "Marchez en priorité sur la roche nue ou sur les tapis de balanes rugueuses, et enjambez délicatement les touffes d'algues brunes humides."
+            }
+        ];
+
+        /* ========================================================
+           DONNÉES DU MODULE 2 : STATIONS ET DYNAMIQUES CLIMATIQUES
+           ======================================================== */
+        const coastalStations = {
+            hendaye: {
+                name: "Hendaye & Saint-Jean-de-Luz",
+                sector: "Pays Basque • Pyrénées-Atlantiques (64)",
+                temps: { 2010: "21.0 °C", 2015: "21.6 °C", 2020: "22.3 °C", 2025: "22.9 °C", 2030: "23.4 °C" },
+                patelle: {
+                    status: { 2010: "Abondante", 2015: "Abondante", 2020: "Dominante", 2025: "Dominante", 2030: "Très dominante" },
+                    obs: { 2010: 190, 2015: 280, 2020: 410, 2025: 560, 2030: 710 },
+                    density: { 2010: "18 ind/m²", 2015: "22 ind/m²", 2020: "28 ind/m²", 2025: "34 ind/m²", 2030: "39 ind/m²" },
+                    note: "Refuge historique d'eau tempérée chaude. La patelle rustique y est abondante depuis des siècles et concurrence sévèrement la patelle commune vulgata lors des canicules marines."
+                },
+                gibbule: {
+                    status: { 2010: "Abondante", 2015: "Abondante", 2020: "Forte densité", 2025: "Forte densité", 2030: "Dominante" },
+                    obs: { 2010: 160, 2015: 230, 2020: 340, 2025: 460, 2030: 590 },
+                    density: { 2010: "14 ind/m²", 2015: "17 ind/m²", 2020: "21 ind/m²", 2025: "25 ind/m²", 2030: "30 ind/m²" },
+                    note: "Présence pérenne de Steromphala pennanti. Aucun stress thermique létal constaté sur cette côte méridionale."
+                }
+            },
+            arcachon: {
+                name: "Bassin d'Arcachon & Côte Landaise",
+                sector: "Gironde (33) & Landes (40)",
+                temps: { 2010: "20.4 °C", 2015: "20.9 °C", 2020: "21.7 °C", 2025: "22.2 °C", 2030: "22.8 °C" },
+                patelle: {
+                    status: { 2010: "Bien établie", 2015: "Abondante", 2020: "Abondante", 2025: "Forte densité", 2030: "Forte densité" },
+                    obs: { 2010: 120, 2015: 185, 2020: 290, 2025: 395, 2030: 510 },
+                    density: { 2010: "12 ind/m²", 2015: "16 ind/m²", 2020: "22 ind/m²", 2025: "27 ind/m²", 2030: "32 ind/m²" },
+                    note: "Sur les enrochements artificiels et les passes du Bassin d'Arcachon, la patelle rustique remplace progressivement Patella vulgata sur le haut d'estran."
+                },
+                gibbule: {
+                    status: { 2010: "Bien établie", 2015: "Bien établie", 2020: "Abondante", 2025: "Abondante", 2030: "Forte densité" },
+                    obs: { 2010: 110, 2015: 160, 2020: 240, 2025: 330, 2030: 420 },
+                    density: { 2010: "10 ind/m²", 2015: "14 ind/m²", 2020: "18 ind/m²", 2025: "22 ind/m²", 2030: "26 ind/m²" },
+                    note: "Colonisation dense des parcs ostréicoles et des jetées rocheuses."
+                }
+            },
+            oleron: {
+                name: "Pertuis Charentais (Îles d'Oléron & de Ré)",
+                sector: "Charente-Maritime (17)",
+                temps: { 2010: "19.2 °C", 2015: "19.8 °C", 2020: "20.6 °C", 2025: "21.1 °C", 2030: "21.7 °C" },
+                patelle: {
+                    status: { 2010: "Front historique", 2015: "Bien établie", 2020: "Abondante", 2025: "Abondante", 2030: "Forte densité" },
+                    obs: { 2010: 85, 2015: 160, 2020: 275, 2025: 380, 2030: 490 },
+                    density: { 2010: "6 ind/m²", 2015: "12 ind/m²", 2020: "18 ind/m²", 2025: "23 ind/m²", 2030: "28 ind/m²" },
+                    note: "En 2010, cette station marquait la limite septentrionale de Patella rustica. Aujourd'hui, la population y est pérenne et se reproduit massivement."
+                },
+                gibbule: {
+                    status: { 2010: "Bien établie", 2015: "Abondante", 2020: "Abondante", 2025: "Forte densité", 2030: "Forte densité" },
+                    obs: { 2010: 95, 2015: 170, 2020: 260, 2025: 360, 2030: 470 },
+                    density: { 2010: "8 ind/m²", 2015: "13 ind/m²", 2020: "19 ind/m²", 2025: "24 ind/m²", 2030: "29 ind/m²" },
+                    note: "Densification des populations sous les champs de Fucus vesiculosus."
+                }
+            },
+            pornic: {
+                name: "Pornic & Estuaire de la Loire",
+                sector: "Loire-Atlantique (44) • Pays de Retz",
+                temps: { 2010: "18.3 °C", 2015: "19.0 °C", 2020: "19.8 °C", 2025: "20.3 °C", 2030: "20.9 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Premiers pionniers", 2020: "Établie localement", 2025: "Bien établie", 2030: "Abondante" },
+                    obs: { 2010: 0, 2015: 14, 2020: 68, 2025: 145, 2030: 230 },
+                    density: { 2010: "0 ind/m²", 2015: "1 ind/m²", 2020: "4 ind/m²", 2025: "9 ind/m²", 2030: "15 ind/m²" },
+                    note: "Franchissement historique de l'estuaire de la Loire observé par les sentinelles BioLit vers 2014-2015 ! Une confirmation majeure du suivi citoyen."
+                },
+                gibbule: {
+                    status: { 2010: "Présente", 2015: "Bien établie", 2020: "Abondante", 2025: "Abondante", 2030: "Forte densité" },
+                    obs: { 2010: 40, 2015: 85, 2020: 160, 2025: 235, 2030: 310 },
+                    density: { 2010: "3 ind/m²", 2015: "7 ind/m²", 2020: "12 ind/m²", 2025: "17 ind/m²", 2030: "22 ind/m²" },
+                    note: "Expansion rapide le long de la côte de Jade et des rochers de la Côte de Jade."
+                }
+            },
+            morbihan: {
+                name: "Golfe du Morbihan & Quiberon",
+                sector: "Morbihan (56) • Bretagne Sud",
+                temps: { 2010: "17.6 °C", 2015: "18.3 °C", 2020: "19.1 °C", 2025: "19.7 °C", 2030: "20.2 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Absente", 2020: "Premiers pionniers", 2025: "Établie localement", 2030: "Bien établie" },
+                    obs: { 2010: 0, 2015: 2, 2020: 32, 2025: 95, 2030: 175 },
+                    density: { 2010: "0 ind/m²", 2015: "<1 ind/m²", 2020: "2 ind/m²", 2025: "6 ind/m²", 2030: "11 ind/m²" },
+                    note: "Le Golfe du Morbihan fonctionne comme une enclave thermique abritée favorable. Les premiers individus reproducteurs ont été photographiés sur les pointes rocheuses de Quiberon."
+                },
+                gibbule: {
+                    status: { 2010: "Présente", 2015: "Présente", 2020: "Bien établie", 2025: "Abondante", 2030: "Abondante" },
+                    obs: { 2010: 30, 2015: 65, 2020: 130, 2025: 210, 2030: 290 },
+                    density: { 2010: "2 ind/m²", 2015: "5 ind/m²", 2020: "10 ind/m²", 2025: "15 ind/m²", 2030: "20 ind/m²" },
+                    note: "Forte progression dans les rias et les baies peu profondes bien réchauffées par le soleil estival."
+                }
+            },
+            iroise: {
+                name: "Mer d'Iroise & Rade de Brest",
+                sector: "Finistère (29) • Pointe occidentale",
+                temps: { 2010: "15.4 °C", 2015: "15.9 °C", 2020: "16.5 °C", 2025: "17.0 °C", 2030: "17.6 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Absente", 2020: "Absente", 2025: "Observations isolées", 2030: "Premiers pionniers" },
+                    obs: { 2010: 0, 2015: 0, 2020: 1, 2025: 12, 2030: 45 },
+                    density: { 2010: "0 ind/m²", 2015: "0 ind/m²", 2020: "<0.1 ind/m²", 2025: "0.5 ind/m²", 2030: "2 ind/m²" },
+                    note: "Barrière thermique de l'Iroise : le brassage violent des courants de marée et les upwellings d'eaux profondes froides freinent l'implantation des espèces méridionales."
+                },
+                gibbule: {
+                    status: { 2010: "Rare", 2015: "Présente", 2020: "Présente", 2025: "Bien établie", 2030: "Abondante" },
+                    obs: { 2010: 15, 2015: 35, 2020: 80, 2025: 150, 2030: 220 },
+                    density: { 2010: "1 ind/m²", 2015: "3 ind/m²", 2020: "6 ind/m²", 2025: "10 ind/m²", 2030: "15 ind/m²" },
+                    note: "Progression par l'intérieur abrité de la Rade de Brest où l'eau est plus chaude que sur les écueils exposés de la pointe du Raz."
+                }
+            },
+            roscoff: {
+                name: "Roscoff & Côte de Granit Rose",
+                sector: "Finistère Nord (29) & Côtes-d'Armor (22)",
+                temps: { 2010: "15.2 °C", 2015: "15.7 °C", 2020: "16.3 °C", 2025: "16.8 °C", 2030: "17.4 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Absente", 2020: "Absente", 2025: "Absente", 2030: "Observations sporadiques" },
+                    obs: { 2010: 0, 2015: 0, 2020: 0, 2025: 2, 2030: 15 },
+                    density: { 2010: "0 ind/m²", 2015: "0 ind/m²", 2020: "0 ind/m²", 2025: "<0.1 ind/m²", 2030: "0.5 ind/m²" },
+                    note: "Zone d'eaux tempérées froides sous surveillance active de la Station Biologique de Roscoff (CNRS/Sorbonne Université). Patella vulgata reste largement dominante."
+                },
+                gibbule: {
+                    status: { 2010: "Présente", 2015: "Présente", 2020: "Bien établie", 2025: "Bien établie", 2030: "Abondante" },
+                    obs: { 2010: 25, 2015: 50, 2020: 95, 2025: 160, 2030: 235 },
+                    density: { 2010: "2 ind/m²", 2015: "4 ind/m²", 2020: "7 ind/m²", 2025: "11 ind/m²", 2030: "16 ind/m²" },
+                    note: "Progression constante de Gibbula pennanti dans les cuvettes sableuses à zostères."
+                }
+            },
+            saintmalo: {
+                name: "Saint-Malo & Baie du Mont-Saint-Michel",
+                sector: "Ille-et-Vilaine (35) & Manche (50)",
+                temps: { 2010: "16.5 °C", 2015: "17.1 °C", 2020: "17.8 °C", 2025: "18.4 °C", 2030: "19.0 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Absente", 2020: "Absente", 2025: "Absente", 2030: "Absente" },
+                    obs: { 2010: 0, 2015: 0, 2020: 0, 2025: 0, 2030: 3 },
+                    density: { 2010: "0 ind/m²", 2015: "0 ind/m²", 2020: "0 ind/m²", 2025: "0 ind/m²", 2030: "<0.1 ind/m²" },
+                    note: "Données d'absence confirmées par les quadrats BioLit : la patelle rustique n'a pas encore atteint le Golfe Normanno-Breton."
+                },
+                gibbule: {
+                    status: { 2010: "Front historique", 2015: "Bien établie", 2020: "Abondante", 2025: "Abondante", 2030: "Forte densité" },
+                    obs: { 2010: 35, 2015: 80, 2020: 155, 2025: 230, 2030: 320 },
+                    density: { 2010: "3 ind/m²", 2015: "6 ind/m²", 2020: "11 ind/m²", 2025: "16 ind/m²", 2030: "21 ind/m²" },
+                    note: "Le marnage gigantesque de la Baie (jusqu'à 14 mètres) favorise l'échauffement de l'estran lors des marées de vives-eaux estivales."
+                }
+            },
+            seine: {
+                name: "Baie de Seine & Côte d'Albâtre (Le Havre / Dieppe)",
+                sector: "Seine-Maritime (76) & Calvados (14)",
+                temps: { 2010: "16.2 °C", 2015: "16.8 °C", 2020: "17.5 °C", 2025: "18.1 °C", 2030: "18.7 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Absente", 2020: "Absente", 2025: "Absente", 2030: "Absente" },
+                    obs: { 2010: 0, 2015: 0, 2020: 0, 2025: 0, 2030: 0 },
+                    density: { 2010: "0 ind/m²", 2015: "0 ind/m²", 2020: "0 ind/m²", 2025: "0 ind/m²", 2030: "0 ind/m²" },
+                    note: "Absence totale de Patella rustica. Zone témoin essentielle pour l'étude comparative des espèces d'eaux froides."
+                },
+                gibbule: {
+                    status: { 2010: "Observations rares", 2015: "Front actif", 2020: "Bien établie", 2025: "Abondante", 2030: "Abondante" },
+                    obs: { 2010: 8, 2015: 32, 2020: 95, 2025: 175, 2030: 260 },
+                    density: { 2010: "<1 ind/m²", 2015: "2 ind/m²", 2020: "6 ind/m²", 2025: "11 ind/m²", 2030: "17 ind/m²" },
+                    note: "Remontée spectaculaire de Steromphala pennanti le long des falaises de craie d'Étretat et de Dieppe."
+                }
+            },
+            opale: {
+                name: "Côte d'Opale & Mer du Nord (Boulogne / Dunkerque)",
+                sector: "Pas-de-Calais (62) & Nord (59)",
+                temps: { 2010: "15.8 °C", 2015: "16.4 °C", 2020: "17.1 °C", 2025: "17.7 °C", 2030: "18.3 °C" },
+                patelle: {
+                    status: { 2010: "Absente", 2015: "Absente", 2020: "Absente", 2025: "Absente", 2030: "Absente" },
+                    obs: { 2010: 0, 2015: 0, 2020: 0, 2025: 0, 2030: 0 },
+                    density: { 2010: "0 ind/m²", 2015: "0 ind/m²", 2020: "0 ind/m²", 2025: "0 ind/m²", 2030: "0 ind/m²" },
+                    note: "Donnée d'absence pérenne pour Patella rustica. Patella vulgata y règne en maître sur les digues portuaires et les platiers rocheux."
+                },
+                gibbule: {
+                    status: { 2010: "Absente", 2015: "Observations rares", 2020: "Front pionnier", 2025: "Bien établie", 2030: "Bien établie" },
+                    obs: { 2010: 0, 2015: 4, 2020: 25, 2025: 75, 2030: 140 },
+                    density: { 2010: "0 ind/m²", 2015: "<0.5 ind/m²", 2020: "2 ind/m²", 2025: "5 ind/m²", 2030: "9 ind/m²" },
+                    note: "Arrivée récente de la Gibbule pennante dans le détroit du Pas-de-Calais, confirmant la connexion biogéographique Manche-Mer du Nord."
+                }
+            }
+        };
+
+        /* Paramètres graphiques du front septentrional selon l'année et l'espèce */
+        const frontCoordinates = {
+            patelle: {
+                2010: { y: 625, x1: 180, x2: 440, label: "Front 2010 : Oléron / Charente (46.1°N)" },
+                2015: { y: 525, x1: 150, x2: 415, label: "Front 2015 : Pornic / Estuaire Loire (47.1°N)" },
+                2020: { y: 485, x1: 140, x2: 375, label: "Front 2020 : Golfe du Morbihan (47.5°N)" },
+                2025: { y: 450, x1: 110, x2: 310, label: "Front 2025 : Concarneau / Cornouaille (47.8°N)" },
+                2030: { y: 365, x1: 90,  x2: 270, label: "Projection 2030 : Mer d'Iroise & Rade de Brest (48.3°N)" }
+            },
+            gibbule: {
+                2010: { y: 270, x1: 240, x2: 480, label: "Front 2010 : Saint-Malo / Cotentin (48.6°N)" },
+                2015: { y: 200, x1: 390, x2: 660, label: "Front 2015 : Baie de Seine / Le Havre (49.4°N)" },
+                2020: { y: 165, x1: 470, x2: 720, label: "Front 2020 : Côte d'Albâtre / Dieppe (49.9°N)" },
+                2025: { y: 90,  x1: 580, x2: 820, label: "Front 2025 : Côte d'Opale / Boulogne (50.7°N)" },
+                2030: { y: 45,  x1: 640, x2: 880, label: "Projection 2030 : Mer du Nord & Détroit (51.0°N)" }
+            }
+        };
+
+        const currentActiveStation = "oleron";
+
+        /* ========================================================
+           INITIALISATION DE L'APPLICATION
+           ======================================================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuizQuestion();
+            updateGlobalProgress();
+            selectStation('oleron');
+            updateMapVisuals();
+            initModalDate();
+        });
+
+        /* ========================================================
+           NAVIGATION INTER-MODULES
+           ======================================================== */
+        function switchModule(targetModule) {
+            gameState.currentModule = targetModule;
+
+            // Masquer tous les modules
+            document.querySelectorAll('.module-container').forEach(el => el.classList.remove('active'));
+            const targetEl = document.getElementById(`module-${targetModule}`);
+            if (targetEl) targetEl.classList.add('active');
+
+            // Mettre à jour les pills
+            for (let i = 1; i <= 3; i++) {
+                const pill = document.getElementById(`pill-step-${i}`);
+                if (!pill) continue;
+                pill.classList.remove('active');
+                if (i === targetModule) {
+                    pill.classList.add('active');
+                }
+            }
+
+            // Si on arrive sur le module 3, mettre à jour la synthèse
+            if (targetModule === 3) {
+                renderFinalSummary();
+            }
+
+            updateGlobalProgress();
+            window.scrollTo({ top: 220, behavior: 'smooth' });
+        }
+
+        function updateGlobalProgress() {
+            let progress = 0;
+
+            // Étape 1 : Quiz (jusqu'à 40%)
+            const quizAnswered = gameState.userAnswers.length;
+            progress += (quizAnswered / 5) * 40;
+
+            // Étape 2 : Exploration carte (jusqu'à 40%)
+            const stationsCount = gameState.inspectedStations.size;
+            progress += Math.min(40, (stationsCount / 6) * 40);
+
+            // Étape 3 : Consultation bilan (20%)
+            if (gameState.currentModule === 3) {
+                progress += 20;
+            }
+
+            progress = Math.min(100, Math.round(progress));
+
+            const progressBar = document.getElementById('globalProgressBar');
+            const progressPercent = document.getElementById('globalProgressPercent');
+            if (progressBar) progressBar.style.width = `${progress}%`;
+            if (progressPercent) progressPercent.innerText = `${progress}%`;
+
+            // Mettre à jour l'état visuel des étapes
+            if (quizAnswered === 5) {
+                document.getElementById('pill-step-1')?.classList.add('completed');
+                const status1 = document.getElementById('status-step-1');
+                if (status1) status1.innerText = `Validé (${gameState.quizScore} pts)`;
+            }
+            if (stationsCount >= 5) {
+                document.getElementById('pill-step-2')?.classList.add('completed');
+                const status2 = document.getElementById('status-step-2');
+                if (status2) status2.innerText = `Exploré (${stationsCount} stations)`;
+            }
+            if (gameState.currentModule === 3 && progress >= 90) {
+                document.getElementById('pill-step-3')?.classList.add('completed');
+            }
+        }
+
+        /* ========================================================
+           MODULE 1 : GESTION DU QUIZ
+           ======================================================== */
+        let selectedOptionIndex = null;
+
+        function renderQuizQuestion() {
+            const q = quizQuestions[gameState.quizIndex];
+            if (!q) return;
+
+            document.getElementById('quizCategory').innerText = q.category;
+            document.getElementById('quizCounter').innerText = `Question ${gameState.quizIndex + 1} sur ${quizQuestions.length}`;
+            document.getElementById('quizQuestionText').innerText = q.question;
+
+            const optionsList = document.getElementById('quizOptionsList');
+            optionsList.innerHTML = '';
+            selectedOptionIndex = null;
+
+            document.getElementById('quizValidateBtn').disabled = true;
+            document.getElementById('quizValidateBtn').style.display = 'inline-flex';
+            document.getElementById('quizNextBtn').style.display = 'none';
+            document.getElementById('quizFinishBtn').style.display = 'none';
+
+            // Masquer le feedback pédagogique
+            const feedbackBox = document.getElementById('pedagogicFeedback');
+            feedbackBox.classList.remove('visible');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-button';
+                btn.setAttribute('type', 'button');
+                btn.id = `opt-btn-${idx}`;
+                btn.onclick = () => selectOption(idx);
+
+                btn.innerHTML = `
+                    <div class="option-letter">${opt.letter}</div>
+                    <div class="option-text">${opt.text}</div>
+                `;
+                optionsList.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            selectedOptionIndex = index;
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach((btn, idx) => {
+                btn.classList.toggle('selected', idx === index);
+            });
+            document.getElementById('quizValidateBtn').disabled = false;
+        }
+
+        function validateCurrentAnswer() {
+            if (selectedOptionIndex === null) return;
+
+            const q = quizQuestions[gameState.quizIndex];
+            const isCorrect = (selectedOptionIndex === q.correctIndex);
+
+            // Verrouiller les options
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correctIndex) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedOptionIndex) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Enregistrer la réponse
+            gameState.userAnswers.push({
+                questionIndex: gameState.quizIndex,
+                selectedIndex: selectedOptionIndex,
+                isCorrect: isCorrect
+            });
+
+            if (isCorrect) {
+                gameState.quizScore += 20; // 5 questions * 20 = 100 max
+            }
+
+            document.getElementById('quizLiveScore').innerText = `${gameState.quizScore} / 100 pts`;
+
+            // Afficher le retour pédagogique détaillé
+            const feedbackBox = document.getElementById('pedagogicFeedback');
+            const pedagogicText = document.getElementById('pedagogicText');
+            const tipText = document.getElementById('tipText');
+
+            pedagogicText.innerHTML = `
+                <div style="margin-bottom: 8px; font-size: 0.95rem; color: ${isCorrect ? 'var(--emerald-neon)' : 'var(--coral-alert)'};">
+                    ${isCorrect ? '✓ Excellente démarche scientifique !' : '✗ Attention, ce geste compromet l\'étude ou le milieu :'}
+                </div>
+                ${q.pedagogicExplanation}
+            `;
+            tipText.innerText = q.tipText;
+            feedbackBox.classList.add('visible');
+
+            // Gérer les boutons suivants
+            document.getElementById('quizValidateBtn').style.display = 'none';
+            if (gameState.quizIndex < quizQuestions.length - 1) {
+                document.getElementById('quizNextBtn').style.display = 'inline-flex';
+            } else {
+                document.getElementById('quizFinishBtn').style.display = 'inline-flex';
+            }
+
+            updateGlobalProgress();
+        }
+
+        function nextQuestion() {
+            if (gameState.quizIndex < quizQuestions.length - 1) {
+                gameState.quizIndex++;
+                renderQuizQuestion();
+            }
+        }
+
+        /* ========================================================
+           MODULE 2 : GESTION DE LA CARTE CLIMATIQUE & SÉRIE TEMPORELLE
+           ======================================================== */
+        function setTargetSpecies(species) {
+            gameState.selectedSpecies = species;
+            document.getElementById('btn-sp-patelle').classList.toggle('active', species === 'patelle');
+            document.getElementById('btn-sp-gibbule').classList.toggle('active', species === 'gibbule');
+
+            updateMapVisuals();
+            renderStationDetails(activeStationKey);
+        }
+
+        let activeStationKey = 'oleron';
+
+        function selectStation(stationKey) {
+            activeStationKey = stationKey;
+            gameState.inspectedStations.add(stationKey);
+
+            // Mettre en évidence la station sélectionnée
+            document.querySelectorAll('.station-dot').forEach(c => {
+                c.setAttribute('fill', '#00e5ff');
+                c.setAttribute('r', '5');
+            });
+            const selectedPin = document.querySelector(`#pin-${stationKey} .station-dot`);
+            if (selectedPin) {
+                selectedPin.setAttribute('fill', '#00e676');
+                selectedPin.setAttribute('r', '7.5');
+            }
+
+            renderStationDetails(stationKey);
+            updateGlobalProgress();
+        }
+
+        function renderStationDetails(stationKey) {
+            const data = coastalStations[stationKey];
+            if (!data) return;
+
+            const year = gameState.currentYear;
+            const spData = data[gameState.selectedSpecies];
+
+            document.getElementById('stationNameDisplay').innerText = `Station : ${data.name}`;
+            document.getElementById('stationSector').innerText = data.sector;
+            document.getElementById('stationTempDisplay').innerText = data.temps[year] || '19.0 °C';
+            
+            const statusEl = document.getElementById('stationStatusDisplay');
+            statusEl.innerText = spData.status[year] || 'Non renseigné';
+            if (spData.status[year]?.includes('Absente')) {
+                statusEl.style.color = 'var(--text-muted)';
+            } else if (spData.status[year]?.includes('Pionnier') || spData.status[year]?.includes('Front')) {
+                statusEl.style.color = 'var(--cyan-neon)';
+            } else {
+                statusEl.style.color = 'var(--emerald-neon)';
+            }
+
+            document.getElementById('stationObsCount').innerText = `${spData.obs[year] || 0} relevés`;
+            document.getElementById('stationDensity').innerText = spData.density[year] || '—';
+            document.getElementById('stationObservationNotes').innerText = spData.note;
+
+            // Ajuster l'explication scientifique latérale selon l'espèce
+            const insightBox = document.getElementById('insightBoxText');
+            if (gameState.selectedSpecies === 'patelle') {
+                insightBox.innerHTML = `
+                    <strong>BioLit - Suivi de la Patelle rustique :</strong><br>
+                    Historiquement confinée au sud des Pertuis Charentais, <em>Patella rustica</em> (affinité thermophile) profite des étés chauds pour remonter la Loire-Atlantique et atteindre le Morbihan. La Patelle commune <em>(Patella vulgata)</em>, boréo-atlantique, montre des signes de stress thermique et de décrochement lors des canicules marines.
+                `;
+            } else {
+                insightBox.innerHTML = `
+                    <strong>BioLit - Suivi de la Gibbule pennante :</strong><br>
+                    <em>Steromphala pennanti</em> (gastéropode brouteur) progresse de façon continue depuis la Manche occidentale vers la baie de Seine et la Côte d'Albâtre. Les relevés de quadrats BioLit permettent de cartographier avec une précision kilométrique son front d'onde colonisateur.
+                `;
+            }
+        }
+
+        function onYearSliderChange(yearVal) {
+            gameState.currentYear = parseInt(yearVal, 10);
+            updateYearUI();
+            updateMapVisuals();
+            renderStationDetails(activeStationKey);
+        }
+
+        function updateYearUI() {
+            const y = gameState.currentYear;
+            document.getElementById('currentYearDisplay').innerText = y;
+            document.getElementById('yearSlider').value = y;
+
+            // Mettre à jour l'anomalie thermique SST
+            const anomalyMap = {
+                2010: "+0.2 °C",
+                2015: "+0.5 °C",
+                2020: "+0.9 °C",
+                2025: "+1.2 °C",
+                2030: "+1.5 °C (Proj. GIEC SSP2-4.5)"
+            };
+            document.getElementById('sstAnomalyBadge').innerText = `Anomalie thermique marine : ${anomalyMap[y] || '+0.2 °C'}`;
+
+            // Mettre à jour les ticks
+            [2010, 2015, 2020, 2025, 2030].forEach(t => {
+                const el = document.getElementById(`tick-${t}`);
+                if (el) el.classList.toggle('active', t === y);
+            });
+        }
+
+        function updateMapVisuals() {
+            const y = gameState.currentYear;
+            const sp = gameState.selectedSpecies;
+            const front = frontCoordinates[sp][y];
+
+            if (!front) return;
+
+            // Déplacer la ligne du front
+            const line = document.getElementById('northFrontLine');
+            if (line) {
+                line.setAttribute('y1', front.y);
+                line.setAttribute('y2', front.y);
+                line.setAttribute('x1', front.x1);
+                line.setAttribute('x2', front.x2);
+            }
+
+            // Déplacer le label du front
+            const labelGroup = document.getElementById('northFrontLabelGroup');
+            if (labelGroup) {
+                labelGroup.setAttribute('transform', `translate(${front.x2 + 8}, ${front.y})`);
+                const textEl = labelGroup.querySelector('text');
+                if (textEl) {
+                    textEl.textContent = front.label;
+                }
+            }
+
+            // Ajuster la zone ombrée de colonisation
+            const zone = document.getElementById('speciesSpreadZone');
+            if (zone) {
+                if (sp === 'patelle') {
+                    zone.setAttribute('d', `M 330 765 L 350 750 L 370 710 L 365 660 L 340 625 L 315 ${front.y} L 150 ${front.y} L 150 765 Z`);
+                } else {
+                    zone.setAttribute('d', `M 330 765 L 350 750 L 370 710 L 365 660 L 340 625 L 315 525 L 275 485 L 135 365 L 205 300 L ${front.x2} ${front.y} L 200 ${front.y} L 100 765 Z`);
+                }
+            }
+
+            // Ajuster l'intensité du gradient thermique marin
+            const sstSouth = document.getElementById('sstStopSouth');
+            const sstMid = document.getElementById('sstStopMid');
+            if (sstSouth && sstMid) {
+                const heatScale = (y - 2010) / 20; // 0 à 1
+                sstSouth.setAttribute('stop-opacity', (0.28 + heatScale * 0.22).toFixed(2));
+                sstMid.setAttribute('stop-opacity', (0.15 + heatScale * 0.18).toFixed(2));
+            }
+        }
+
+        function togglePlayAnimation() {
+            gameState.isPlaying = !gameState.isPlaying;
+            const playIcon = document.getElementById('playIcon');
+
+            if (gameState.isPlaying) {
+                playIcon.innerHTML = `<rect x="6" y="4" width="4" height="16" fill="currentColor"></rect><rect x="14" y="4" width="4" height="16" fill="currentColor"></rect>`;
+                gameState.playTimer = setInterval(() => {
+                    let nextY = gameState.currentYear + 5;
+                    if (nextY > 2030) nextY = 2010;
+                    onYearSliderChange(nextY);
+                }, 1600);
+            } else {
+                playIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
+                clearInterval(gameState.playTimer);
+                gameState.playTimer = null;
+            }
+        }
+
+        /* ========================================================
+           MODULE 3 : CARNET DE TERRAIN & BILAN CITOYEN
+           ======================================================== */
+        function renderFinalSummary() {
+            const score = gameState.quizScore;
+            const stationsCount = gameState.inspectedStations.size;
+
+            document.getElementById('finalQuizScoreDisplay').innerText = `${score} / 100`;
+            document.getElementById('finalStationsInspected').innerText = `${stationsCount} / 10`;
+
+            const badgeTitle = document.getElementById('badgeAwardTitle');
+            const badgeTag = document.getElementById('badgeAwardTag');
+            const appreciation = document.getElementById('finalPedagogicAppreciation');
+            const modalStatut = document.getElementById('modalStatut');
+            const modalScore = document.getElementById('modalScore');
+
+            if (score >= 80) {
+                badgeTitle.innerText = "Sentinelle Ambassadrice";
+                badgeTag.innerText = "Accréditation Niveau Expert (MNHN)";
+                badgeTag.style.borderColor = "var(--emerald-neon)";
+                badgeTag.style.color = "var(--emerald-neon)";
+                appreciation.innerText = "Excellence scientifique ! Vous maîtrisez parfaitement la méthode BioLit : rigueur spatio-temporelle, respect méticuleux des micro-habitats d'estran et compréhension de la valeur des données d'absence pour la recherche. Vos observations ont une valeur inestimable pour les publications de l'UMR BOREA.";
+                if (modalStatut) modalStatut.innerText = "Sentinelle Ambassadrice MNHN & Éco2Nature";
+            } else if (score >= 60) {
+                badgeTitle.innerText = "Sentinelle Confirmée";
+                badgeTag.innerText = "Accréditation Niveau Confirmé";
+                badgeTag.style.borderColor = "var(--cyan-neon)";
+                badgeTag.style.color = "var(--cyan-neon)";
+                appreciation.innerText = "Très bon niveau de rigueur ! Vous appliquez avec soin les fondamentaux de l'observation participative. Veillez toujours à replacer les pierres avec une extrême délicatesse et à soigner la netteté de vos photos macro pour simplifier la validation taxonomique.";
+                if (modalStatut) modalStatut.innerText = "Sentinelle Confirmée BioLit";
+            } else {
+                badgeTitle.innerText = "Sentinelle Apprentie";
+                badgeTag.innerText = "Accréditation En Formation";
+                badgeTag.style.borderColor = "var(--amber-star)";
+                badgeTag.style.color = "var(--amber-star)";
+                appreciation.innerText = "Un début encourageant sur l'estran ! La science participative s'apprend sur le terrain : n'hésitez pas à relire les conseils méthodologiques du Guide Éco2Nature pour perfectionner vos prises de vue et la saisie de vos données d'absence.";
+                if (modalStatut) modalStatut.innerText = "Sentinelle Apprentie du Littoral";
+            }
+
+            if (modalScore) modalScore.innerText = `${score} / 100`;
+        }
+
+        function initModalDate() {
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const dateEl = document.getElementById('modalDate');
+            if (dateEl) dateEl.innerText = dateStr;
+        }
+
+        function openCertificateModal() {
+            const modal = document.getElementById('certificateModal');
+            if (modal) modal.classList.add('open');
+        }
+
+        function closeCertificateModal() {
+            const modal = document.getElementById('certificateModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        function resetGameExperience() {
+            if (confirm("Souhaitez-vous réinitialiser votre progression et rejouer la mission ?")) {
+                gameState.quizIndex = 0;
+                gameState.quizScore = 0;
+                gameState.userAnswers = [];
+                gameState.inspectedStations.clear();
+                gameState.currentYear = 2010;
+                if (gameState.playTimer) {
+                    clearInterval(gameState.playTimer);
+                    gameState.isPlaying = false;
+                }
+
+                document.getElementById('quizLiveScore').innerText = "0 / 100 pts";
+                document.querySelectorAll('.step-pill').forEach(p => p.classList.remove('completed'));
+                
+                renderQuizQuestion();
+                updateYearUI();
+                updateMapVisuals();
+                switchModule(1);
+            }
+        }
+    </script>
+</body>
+</html>
